@@ -205,6 +205,18 @@
                 background-color: #5d5b8d;
                 padding: 10px;
                 color: lightgray;  
+
+                .profile{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    img{
+                        height: 50px;
+                        width: 50px;
+                        border-radius: 50%;
+                    }
+                }
             }
 
             .chatIcons{

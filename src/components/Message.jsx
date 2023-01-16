@@ -6,11 +6,13 @@ import { useEffect } from 'react';
 import { useContext } from 'react'
 import { AuthContext } from '../Context/AuthContext'
 import { ChatContext } from '../Context/ChatContext';
+import ImageModal from './ImageModal';
 
 export default function Message({ message, showDate }) {
     const { currentUser } = useContext(AuthContext);
     const { data } = useContext(ChatContext);
     const [messageTime, setMessageTime] = useState('');
+    const [showImageModal, setShowImageModal] = useState(false);
 
     const ref = useRef();
     useEffect(() => {
@@ -23,7 +25,7 @@ export default function Message({ message, showDate }) {
     }, []);
     return (
         <>
-            {showDate && <p className='message-day'>{moment.unix(message.date.seconds).format("MMM D") }</p>}
+            {showDate && <p className='message-day'>{moment.unix(message.date.seconds).format("MMM D")}</p>}
             <div ref={ref} className={`message ${message.senderId === currentUser.uid && "owner"}`}>
                 <div className="messageInfo">
                     <img src={
@@ -40,10 +42,12 @@ export default function Message({ message, showDate }) {
                         <img
                             src={message.img}
                             alt=""
+                            onClick={() => setShowImageModal(true)}
                         />
                     }
                 </div>
             </div>
+            <ImageModal show={showImageModal} setShow={setShowImageModal} img={message.img} />
         </>
     )
 }
