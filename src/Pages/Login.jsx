@@ -6,6 +6,7 @@ import { auth } from '../Firebase';
 
 export const Login = () => {
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('something went wrong !')
     const navigate = useNavigate();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,7 +20,8 @@ export const Login = () => {
             })
             .catch((err) => {
                 setError(true);
-                console.log(err);
+                // console.log(err);
+                setErrorMessage(err.code);
             })
     }
     return (
@@ -31,7 +33,7 @@ export const Login = () => {
                     <input type="email" placeholder="email" />
                     <input type="password" placeholder="password" />
                     <button>Login</button>
-                    {error && <span>Something went wrong </span>}
+                    {error && <span className='errorMessage'>{errorMessage} </span>}
                 </form>
                 <p>You don't have an account? <Link to='/register'>Register</Link></p>
             </div>

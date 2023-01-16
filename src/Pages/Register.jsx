@@ -11,6 +11,7 @@ import { useNavigate , Link } from 'react-router-dom';
 
 export const Register = () => {
     const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -21,6 +22,11 @@ export const Register = () => {
         const file = e.target[3].files[0];
 
         try {
+            if(!file){
+                setError(true);
+                setErrorMessage('Avatar is recquired !');
+                return;
+            }
             const res = await createUserWithEmailAndPassword(auth, email, password);
             const storageRef = ref(storage, displayName);
 
@@ -73,9 +79,9 @@ export const Register = () => {
                         <span>Add an Avatar</span>
                     </label>
                     <button>Sign up</button>
-                    {error && <span>Something went wrong </span>}
+                    {error && <span className='errorMessage'>{errorMessage}</span>}
                 </form>
-                <p>You do have an account? <Link to='/register'>Login</Link></p>
+                <p>You do have an account? <Link to='/login'>Login</Link></p>
             </div>
         </div>
     )
